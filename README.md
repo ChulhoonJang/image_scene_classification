@@ -15,7 +15,7 @@ This report presents a systematic approach to image scene classification using t
 Corresponding notebooks: 
 
 * part_1_0_data_engineering_and_augmentation.ipynb
-* part_1_3_synthetic_data_generation.ipynb
+* part_1_3_synthetic_data_generation_using_stable_diffusion.ipynb
 * viz_synthetic_data.ipynb
 
 ---
