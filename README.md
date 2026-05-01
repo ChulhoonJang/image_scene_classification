@@ -12,11 +12,17 @@ This report presents a systematic approach to image scene classification using t
 
 ## Part 1 - Data Engineering & Augmentation
 
+Corresponding notebooks: 
+
+* part_1_0_data_engineering_and_augmentation.ipynb
+* part_1_3_synthetic_data_generation.ipynb
+* viz_synthetic_data.ipynb
+
 ---
 
 ### 1.1 — Exploratory Data Analysis (EDA)
 
-EDA is an important step before diving into training — not only to understand the purpose of the dataset, characteristics, image quality, image size, and class distribution, but also to identify data imbalance, missing or corrupted samples, and pixel statistics, as well as to get familiar with the folder structure and APIs to read annotations and sensor data correctly.
+EDA is an important step before diving into training not only to understand the purpose of the dataset, characteristics, image quality, image size, and class distribution, but also to identify data imbalance, missing or corrupted samples, and pixel statistics, as well as to get familiar with the folder structure and APIs to read annotations and sensor data correctly.
 
 * **Class distribution and any imbalance present**
 
@@ -107,6 +113,11 @@ In this work, Stable Diffusion was selected *after the first round of training*,
 ## Part 2 — Transfer Learning & Fine-Tuning
 
 Note: **Macro F1** (averaged F1 across classes) is used as the key KPI for model comparison. Evaluation is performed on the held-out test set. Only the original training dataset with augmentation pipelines is used in this section to evaluate model performance without the synthetic dataset.
+
+Corresponding notebooks:
+
+* part_2_1_baseline_model.ipynb
+* part_2_2_transfer_learning.ipynb
 
 ---
 
@@ -219,6 +230,10 @@ If the model is intended for offline use, where computational constraints are le
 
 ## Part 3 — Targeted Diagnosis & Generalization
 
+Corresponding notebook:
+
+* part_3_targeted_diagnosis_and_generalization.ipynb
+
 ---
 
 ### 3.1 - Domain Shift
@@ -295,6 +310,12 @@ Finally, knowledge distillation would be applied to maximize accuracy within the
 ---
 
 ## Part 4 - Data refinement and Re-training
+
+Corresponding notebook:
+
+* part_4_1_dataset_refinement.ipynb
+
+---
 
 Analysis of misclassified examples revealed that ambiguous labels and labeling errors are a significant source of accuracy degradation. Before further optimizing the augmentation pipeline, adding synthetic data, or tuning the training process, addressing the quality of the original dataset should be the first priority. Without it, it becomes difficult to determine whether performance limitations stem from the model and training process or from the data itself. This motivated the construction of a data refinement pipeline to systematically identify and correct problematic samples, followed by retraining the model on the refined dataset to assess the impact on classification performance.
 
