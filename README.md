@@ -368,14 +368,14 @@ The same pattern is observed in the **buildings ↔ street** pair (+4.1%), where
 
 The same finding holds for the CNN-Baseline-best trained from scratch, reinforcing that this is a dataset-level characteristic rather than a model-specific limitation.
 
-| Class     | Top-1  | Top-2  | Gap     |
-|-----------|--------|--------|---------|
-| buildings | 91.53% | 98.40% | +6.87%  |
-| forest    | 98.95% | 99.79% | +0.84%  |
-| glacier   | 86.80% | 98.55% | +11.75% |
-| mountain  | 90.86% | 98.86% | +8.00%  |
-| sea       | 95.88% | 98.82% | +2.94%  |
-| street    | 94.21% | 99.00% | +4.79%  |
-| **Total** | **92.97%** | **98.90%** | **+5.93%** |
+| Class     | Top-1  | Top-2  | Gap    |
+|-----------|--------|--------|--------|
+| buildings | 92.22% | 99.08% | +6.86% |
+| forest    | 98.73% | 99.79% | +1.06% |
+| glacier   | 86.08% | 98.37% | +12.29% |
+| mountain  | 92.38% | 99.62% | +7.24% |
+| sea       | 95.29% | 98.04% | +2.75% |
+| street    | 90.42% | 99.20% | +8.78% |
+| **Total** | **92.37%** | **99.00%** | **+6.63%** |
 
 Even with significantly fewer parameters, the CNN-Baseline-best achieves near-perfect Top-2 accuracy across all classes. The confused class pairs — glacier/mountain and buildings/street — remain identical to those observed in ConvNeXt-Tiny-best, further confirming that the performance ceiling is determined by dataset ambiguity rather than model capacity. This is also consistent with the presence of mislabeled samples observed during error analysis.
