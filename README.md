@@ -275,9 +275,7 @@ Failure case: the sample at (col 1) shows high activation in the deer region and
 
 ## 3.3 - Qualitative Questions
 
-**Q1: What would you change in your approach to the questions presented if you had a week to solve**
-
-**them instead of 3 days?**
+**Q1: What would you change in your approach to the questions presented if you had a week to solve them instead of 3 days?**
 
 **A:** Given more time, the following improvements would be prioritized.
 
@@ -343,3 +341,41 @@ To validate the impact of the refined dataset, both the CNN baseline and ConvNeX
 ![convnext_tiny_all_layers_best_misclassified](outputs/refined_dataset/convnext_tiny_all_layers_best_misclassified.png)
 
 This also highlights a fundamental limitation of single-label classification for scene understanding. Unlike object classification, where a single label can unambiguously describe the primary subject, scene classification often involves multiple coexisting elements. A street scene may contain buildings, and a glacier may be indistinguishable from a snow-covered mountain. Assigning a single label to such scenes is inherently ambiguous, and may impose an artificial constraint on both the annotation process and the model's learning objective. A multi-label classification formulation, or a more fine-grained labeling guideline, could better reflect the complexity of real-world scenes.
+
+### 4.3 Analysis with Top-2 Accuracy
+
+Top-2 accuracy measures whether the correct label appears within the model's top-2 predictions, rather than requiring it to be the single highest-confidence prediction. This metric is particularly useful for identifying cases where the model is uncertain between two visually similar classes.
+
+To better understand the nature of misclassifications, Top-2 accuracy was measured alongside Top-1 across all classes.
+
+**ConvNeXt-Tiny-best**
+
+| Class     | Top-1  | Top-2   | Gap    |
+|-----------|--------|---------|--------|
+| buildings | 95.88% | 100.00% | +4.12% |
+| forest    | 100.00% | 100.00% | +0.00% |
+| glacier   | 90.60% | 99.46%  | +8.86% |
+| mountain  | 92.19% | 99.24%  | +7.05% |
+| sea       | 99.61% | 99.80%  | +0.19% |
+| street    | 96.41% | 99.80%  | +3.39% |
+| **Total** | **95.63%** | **99.70%** | **+4.07%** |
+
+The large Top-1 → Top-2 gap in **glacier** (+8.9%) and **mountain** (+7.0%) reveals that misclassifications are concentrated in visually ambiguous class pairs. In both cases, the correct label is consistently ranked 2nd by the model, indicating that the model has learned meaningful feature representations. The confusion stems from inherent inter-class visual similarity rather than model weakness.
+
+The same pattern is observed in the **buildings ↔ street** pair (+4.1%), where shared urban textures make the boundary ambiguous. In contrast, **forest** and **sea** show near-zero gaps, confirming they are well-separable classes.
+
+**CNN-Baseline-best**
+
+The same finding holds for the CNN-Baseline-best trained from scratch, reinforcing that this is a dataset-level characteristic rather than a model-specific limitation.
+
+| Class     | Top-1  | Top-2  | Gap     |
+|-----------|--------|--------|---------|
+| buildings | 91.53% | 98.40% | +6.87%  |
+| forest    | 98.95% | 99.79% | +0.84%  |
+| glacier   | 86.80% | 98.55% | +11.75% |
+| mountain  | 90.86% | 98.86% | +8.00%  |
+| sea       | 95.88% | 98.82% | +2.94%  |
+| street    | 94.21% | 99.00% | +4.79%  |
+| **Total** | **92.97%** | **98.90%** | **+5.93%** |
+
+Even with significantly fewer parameters, the CNN-Baseline-best achieves near-perfect Top-2 accuracy across all classes. The confused class pairs — glacier/mountain and buildings/street — remain identical to those observed in ConvNeXt-Tiny-best, further confirming that the performance ceiling is determined by dataset ambiguity rather than model capacity. This is also consistent with the presence of mislabeled samples observed during error analysis.
