@@ -269,7 +269,7 @@ Failure case: the sample at (col 2) shows high activation in the truck region ra
 
 Failure case: the sample at (col 1) shows high activation in the deer region and is misclassified as sea
 
-![grad_cam_stl10-2](outputs/grad_cam_stl10-3.png)
+![grad_cam_stl10-3](outputs/grad_cam_stl10-3.png)
 
 ---
 
@@ -295,9 +295,7 @@ Failure case: the sample at (col 1) shows high activation in the deer region and
 
 ---
 
-**Q3: Our solutions mostly designed to run on edge devices with limited compute, how would you**
-
-**approach preparing this solution to run on such devices?**
+**Q3: Our solutions mostly designed to run on edge devices with limited compute, how would you approach preparing this solution to run on such devices?**
 
 **A**: The first step would be to understand the computational constraints of the target edge device and determine the available budget for this specific task. Equally important is defining the acceptable accuracy threshold. If 92% Macro F1 is sufficient, the CNN baseline could be deployed immediately. With only 1.7M parameters, it is already compact, and further optimization through TensorRT or INT8 quantization would make it significantly faster.
 
@@ -329,7 +327,7 @@ The refinement pipeline works as follows. Samples where the model predicts with 
 
 ![suspicious_page01](dataset_refinement/corrections_test/suspicious_page01.png)
 
-### 4.2 Re-training
+### 4.2 - Re-training
 
 To validate the impact of the refined dataset, both the CNN baseline and ConvNeXt-Tiny with full unfreezing were retrained under the same training setup. Evaluation on the refined test set shows consistent improvement across both models, with the CNN baseline gaining 1.05% and ConvNeXt-Tiny gaining 0.73% in Macro F1. Analysis of the remaining misclassified examples from ConvNeXt-Tiny reveals that the number of clear labeling errors has significantly reduced. The residual misclassifications are predominantly samples that are genuinely ambiguous even to human judgment, suggesting that the model has reached a level where further gains will require either clearer labeling guidelines or more sophisticated modeling strategies.
 
@@ -342,7 +340,7 @@ To validate the impact of the refined dataset, both the CNN baseline and ConvNeX
 
 This also highlights a fundamental limitation of single-label classification for scene understanding. Unlike object classification, where a single label can unambiguously describe the primary subject, scene classification often involves multiple coexisting elements. A street scene may contain buildings, and a glacier may be indistinguishable from a snow-covered mountain. Assigning a single label to such scenes is inherently ambiguous, and may impose an artificial constraint on both the annotation process and the model's learning objective. A multi-label classification formulation, or a more fine-grained labeling guideline, could better reflect the complexity of real-world scenes.
 
-### 4.3 Analysis with Top-2 Accuracy
+### 4.3 - Analysis with Top-2 Accuracy
 
 Top-2 accuracy measures whether the correct label appears within the model's top-2 predictions, rather than requiring it to be the single highest-confidence prediction. This metric is particularly useful for identifying cases where the model is uncertain between two visually similar classes.
 
